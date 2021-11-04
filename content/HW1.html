@@ -140,19 +140,116 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">About << <a href='About.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2<br /><h1>HW1</h1>
-<p>HW1 - 網際動畫與 touch typing 佔學期成績 20%.</p>
-<p><span style="background-color: #ffff99;">HW1 必須在 2021.10.20 22:00 之前完成</span>.</p>
-<p><a href="https://github.com/mdecourse/cp2021/discussions/8">HW1 具體項目成果回報區</a>將於 2021.09.23 開啟, 於 <span style="background-color: #ff99cc;">2021.10.20 22:00 關閉</span></p>
-<ol>
-<li>請至 <a href="https://github.com">https://github.com</a> 申請 Github 帳號後, 至 <a href="https://mde.tw/cp2021/content/Task1.html">https://mde.tw/cp2021/content/Task1.html</a>  頁面, 將左右碰撞移動的紅色方塊, 改為先移動到水平畫面中心點位置後, 接著上下碰撞移動.</li>
-<li>請將 1. 的程式碼存入個人 Gist 區 (<a href="https://docs.github.com/en/github/writing-on-github/editing-and-sharing-content-with-gists/creating-gists">說明</a>).</li>
-<li>請在 1. 的程式中, 加入與 <a href="https://mde.tw/cp2021/content/Cango.html">Cango 頁面</a> Fourbar 程式碼相同功能的啟動按鈕, 讓使用者可以利用按鈕啟動或中斷紅色方塊上下碰撞移動. 完成後請將程式碼存入個人 Gist 區.</li>
-<li>請在 Gist 檔案編輯區, 利用鍵盤輸入 <a href="https://docs.github.com/en/github/writing-on-github/editing-and-sharing-content-with-gists/creating-gists#about-gists">https://docs.github.com/en/github/writing-on-github/editing-and-sharing-content-with-gists/creating-gists#about-gists</a> 中的這段英文內容, 請利用手機計時, 大概需要多少時間? 請將此段練習打字的內容與所需時間存入 Gist 檔案中.</li>
-<li>請至少練習 key in 這段英文內容三次, 然後看看是否已經了解如何透過電腦鍵盤 touch typing?</li>
-<li>接下來請利用中文輸入 <a href="https://ithelp.ithome.com.tw/articles/10206233">https://ithelp.ithome.com.tw/articles/10206233</a> 的第一段中文說明, 請利用手機計時, 大概需要多少時間?</li>
-</ol>
+<p><a href="https://gist.githubusercontent.com/RWE1116/0cec6496a5a27122e1ae936eadb82092/raw/519d2ec3e7abe7239f5057455cc6f47492204ad0/HW1.py">紅方塊移動(無按鈕)</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+import browser.timer
+
+canvas = html.CANVAS(width = 400, height = 100)
+canvas.id = "game-board3"
+brython_div = doc["brython_div3"]
+brython_div &lt;= canvas
+ctx = canvas.getContext("2d")
+px = 0
+py =50
+width = 20
+height = 20
+speed = 2
+
+def game():
+    global px, py, width, height, speed
+    ctx.clearRect(px, py, width, height)
+    ctx.fillStyle = "red"
+    px+=speed
+    if px &lt;(px+210)&gt;canvas.width:
+        px=200
+    
+    if px&lt;(px+210)&gt;canvas.width:   
+        py += speed
+    
+    if py &lt; 0 or (py+height ) &gt; canvas.height:
+        speed = -speed
+        
+    ctx.fillRect(px, py, width, height)
+    
+browser.timer.set_interval(game, 10)
+</pre>
 <p></p>
-<br />About << <a href='About.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2</div>
+<p><a href="https://gist.githubusercontent.com/RWE1116/75ce59aec0e534d9cb69a6026c84b8e5/raw/1560f3db2efd89ac1a909c064ffaf3d4f1f6f253/gistfile1.txt">紅方塊移動(有按鈕)</a></p>
+<pre>from browser import html
+from browser import document as doc
+import browser.timer
+
+canvas = html.CANVAS(width = 400, height = 100)
+canvas.id = "game-board3"
+brython_div = doc["brython_div3"]
+brython_div &lt;= canvas
+ctx = canvas.getContext("2d")
+brython_div &lt;= html.BUTTON("啟動", id="power")
+
+px = 0
+py =50
+width = 20
+height = 20
+speed = 2
+
+def game():
+    global px, py, width, height, speed
+    ctx.clearRect(px, py, width, height)
+    ctx.fillStyle = "red"
+    px+=speed
+    if px &lt;(px+210)&gt;canvas.width:
+        px=200
+    
+    if px&lt;(px+210)&gt;canvas.width:   
+        py += speed
+    
+    if py &lt; 0 or (py+height ) &gt; canvas.height:
+        speed = -speed
+        
+    ctx.fillRect(px, py, width, height)
+    
+    cube()
+
+game = None
+
+def gametion(ev) :
+    global game
+    if game is None :
+        game = timer.set_interval(cube, 10)
+        doc['power'].text = '暫停'
+    elif game == 'hold':
+        game = timer.set_interval(cube, 10)
+        doc['power'].text = '暫停'
+    else:
+        timer.clear_interval(game)
+        game = 'hold'
+        doc['power'].text = '繼續'
+doc["power"].bind("click", gametion)
+browser.timer.set_interval(game, 10)<br/><br/><a href="https://gist.githubusercontent.com/RWE1116/b23c9cea9c964dc32c94954e5681bc8f/raw/a7c27f3b821e0a06fc546b3618e470cf91169704/%25E8%258B%25B1%25E6%2589%2593">英打</a></pre>
+<pre>Every gist is a Git repository,which means that it can be forked and cioned.If you are singned in to GitHub when you create a gist,the gist will be associated with your account and you will see it your list of gists when you navigate to your gist home page.
+Gist can be public or secret.Public gists show up in Discover,where people can browse new gists as they're creted.They're aiso seaarchabie,so you can use them if you'd like other people to find and see your work.
+Secret gists don't show up in Discover and are not searchable.Secret gists aren't private private.If yousend the URL of a secret gist to a friend, thy'll be able to ee it.However,if someone youdon't know discovers the URL,they'llaiso be able to see your gist.If you need to keep your code away from pryind eyes,youmay want to crate a private repository instead.
+After creating a gist,you cannot convert it from public to secret.
+You'll receive a notification when:
+You are the author of a gist.
+Someone mentions you in a gist.
+You subscribe to a gist,by clicking Subscribe at top of gist.
+You can pin gists to your profile so other people can see them easily. For more information,see Pinning items to your profile."
+You can discover public gists others have created by going to the gist home page and clicking All Gists.This will take you to a page of all gists sorted and displayed by time of creation or update.Youacn also search gists by language with Gist Search.Gist search uses the same search syntax as code search.
+Since gists are Git  repositories, you can view their full commit history,complete with diffs.Youcan also fork or clone gists.For more information,see"Forkng and cioning gists".
+You can downioad a ZIP file of a gist by clicking he Download ZIP button at the top of the gist.You can embed a gist in any text fild thetsupports Javascript,such as a biog post.Toget the embed code, click the clipboard icon next to the Embed URL of a gist. To embed a specific gist file,append the Embed URL with ?file=FILENAME.
+Gist supports mapping GeoJSON files.These maps are displayed in embedded gists,so you can easily share and embed maps.For more information,see"Working with non-code files."
+計時44:45.85<br/><br/><a href="https://gist.githubusercontent.com/RWE1116/2f75b477d4ec44f847e825499a1c2ae8/raw/c214fe3f9e11ecc97266630738ef7ecd2b1dfa15/%25E4%25B8%25AD%25E6%2589%2593">中打<br/><br/></a></pre>
+<pre>Gist是Github的一個子服務，且任人都可以使用這個服務，不論你是否擁
+有Github帳號。以開發者的角度來說，最基本的功能就是可以分享片段的原
+始碼。有別於Github的Repository，Gist可以只分享專案中的某一個小檔案
+中的程式碼，且有私人的選項，讓別人不會搜尋到你的Gist。在Github的
+Repository設定Private是要付費的，但在Gist是不需要的。除此之外Gist
+還有許多用處，包括科以直接執行我們就來一一介紹吧！
+時間10:13.39</pre>
+<pre><a href="https://gist.githubusercontent.com/RWE1116/2f75b477d4ec44f847e825499a1c2ae8/raw/c214fe3f9e11ecc97266630738ef7ecd2b1dfa15/%25E4%25B8%25AD%25E6%2589%2593"></a><br/><br/></pre>
+<pre></pre><br />About << <a href='About.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2</div>
         
     <!-- footer -->
       <div class="container">
