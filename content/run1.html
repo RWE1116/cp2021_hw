@@ -2,7 +2,7 @@
         <head>
         <title>cp2021 homework site</title>
         <meta charset="utf-8">
-<meta property="head" content="H1">
+<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -139,117 +139,152 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">About << <a href='About.html'>Previous</a> <a href='run1.html'>Next</a> >> run1<br /><h1>HW1</h1>
-<p><a href="https://gist.githubusercontent.com/RWE1116/0cec6496a5a27122e1ae936eadb82092/raw/519d2ec3e7abe7239f5057455cc6f47492204ad0/HW1.py">紅方塊移動(無按鈕)</a></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
-from browser import document as doc
-import browser.timer
-
-canvas = html.CANVAS(width = 400, height = 100)
-canvas.id = "game-board3"
-brython_div = doc["brython_div3"]
-brython_div &lt;= canvas
-ctx = canvas.getContext("2d")
-px = 0
-py =50
-width = 20
-height = 20
-speed = 2
-
-def game():
-    global px, py, width, height, speed
-    ctx.clearRect(px, py, width, height)
-    ctx.fillStyle = "red"
-    px+=speed
-    if px &lt;(px+210)&gt;canvas.width:
-        px=200
-    
-    if px&lt;(px+210)&gt;canvas.width:   
-        py += speed
-    
-    if py &lt; 0 or (py+height ) &gt; canvas.height:
-        speed = -speed
-        
-    ctx.fillRect(px, py, width, height)
-    
-browser.timer.set_interval(game, 10)
-</pre>
+    <div id="tipue_search_content">HW1 << <a href='HW1.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2<br /><h1>run1</h1>
+<p><a href="./../downloads/w12demo.txt">w12demo.txt</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Flag_of_the_Republic_of_China#Construction_details">ROC 國旗規格</a>.</p>
+<p><a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%9B%BD%E6%97%97#%E8%A7%84%E6%A0%BC">PROC 國旗規格</a> - 可以根據此規格定義, 新增 <button id="procflas">PROC flag</button> 按鈕.</p>
+<p><a href="https://en.wikipedia.org/wiki/Flag_of_the_United_States#Specifications">USA 國旗規格</a> - 可以根據此規格定義, 新增 <button id="usaflag">USA flag</button> 按鈕.</p>
+<!-- 導入 brython 程式庫 -->
+<script src="./../cmsimde/static/brython.js"></script>
+<script src="./../cmsimde/static/brython_stdlib.js"></script>
+<!-- 啟動 Brython -->
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<p><!-- 導入 FileSaver 與 filereader --></p>
+<p>
+<script src="./../cmsimde/static/ace/FileSaver.min.js" type="text/javascript"></script>
+<script src="./../cmsimde/static/ace/filereader.js" type="text/javascript"></script>
+</p>
+<p><!-- 導入 ace --></p>
+<p>
+<script src="./../cmsimde/static/ace/ace.js" type="text/javascript"></script>
+<script src="./../cmsimde/static/ace/ext-language_tools.js" type="text/javascript"></script>
+<script src="./../cmsimde/static/ace/mode-python3.js" type="text/javascript"></script>
+<script src="./../cmsimde/static/ace/snippets/python.js" type="text/javascript"></script>
+</p>
+<p><!-- 請注意, 這裡使用 Javascript 將 localStorage["py_src"] 中存在近端瀏覽器的程式碼, 由使用者決定存檔名稱--></p>
+<p>
+<script type="text/javascript">
+function doSave(storage_id, filename){
+    var blob = new Blob([localStorage[storage_id]], {type: "text/plain;charset=utf-8"});
+    filename = document.getElementById(filename).value
+    saveAs(blob, filename+".py");
+}
+</script>
+</p>
+<p><!-- 導入 gearUtils-0.9.js Cango 齒輪繪圖程式庫 -->
+<script src="https://mde.tw/cp2021/cmsimde/static/Cango-24v03-min.js"></script>
+<script src="https://mde.tw/cp2021/cmsimde/static/gearUtils-09.js"></script>
+<script src="https://mde.tw/cp2021/cmsimde/static/SVGpathUtils-6v03-min.js"></script>
+<script src="https://mde.tw/cp2021/cmsimde/static/sylvester.js"></script>
+<script src="https://mde.tw/cp2021/cmsimde/static/PrairieDraw.js"></script>
+</p>
+<p><button id="add1to100">add 1 to 100</button><button id="p261">p261</button><button id="rocflag">ROC flag</button><button id="red">red</button></p>
+<p><!-- ######################  editor1 開始 ###################### --></p>
+<p><!-- 用來顯示程式碼的 editor 區域 --></p>
+<div id="kw_editor1" style="width: 600px; height: 300px;"></div>
+<p><!-- 以下的表單與按鈕與前面的 Javascript doSave 函式以及 FileSaver.min.js 互相配合 --></p>
+<p><!-- 存擋表單開始 --></p>
+<form><label>Filename: <input id="kw_filename" placeholder="input file name" type="text"/>.py</label> <input onclick="doSave('kw_py_src1', 'kw_filename1');" type="submit" value="Save"/></form>
+<p><!-- 存擋表單結束 --></p>
 <p></p>
-<p><a href="https://gist.githubusercontent.com/RWE1116/75ce59aec0e534d9cb69a6026c84b8e5/raw/1560f3db2efd89ac1a909c064ffaf3d4f1f6f253/gistfile1.txt">紅方塊移動(有按鈕)</a></p>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+<p><!-- 執行與清除按鈕開始 --></p>
+<p><button id="kw_run1">Run</button> <button id="kw_show_console1">Output</button> <button id="kw_clear_console1">清除輸出區</button><button id="clear_bd1">清除繪圖區</button><button onclick="window.location.reload()">Reload</button></p>
+<p><!-- 執行與清除按鈕結束 --></p>
+<p></p>
+<p><!-- 程式執行 ouput 區 --></p>
+<div style="width: 100%; height: 100%;"><textarea autocomplete="off" id="kw_console1"></textarea></div>
+<p><!-- Brython 程式執行的結果, 都以 brython_div 作為切入位置 --></p>
+<!-- 這裡的畫布 id 為 brython_div -->
+<div id="brython_div"></div>
+<p><!-- ######################  editor1 結束 ###################### --></p>
+<!-- 以下可以開始利用 editor1 的設定編寫對應 Brython 程式 -->
+<script type="text/python3">
 from browser import document as doc
-import browser.timer
+import ace
 
-canvas = html.CANVAS(width = 400, height = 100)
-canvas.id = "game-board3"
-brython_div = doc["brython_div3"]
-brython_div &lt;= canvas
-ctx = canvas.getContext("2d")
-brython_div &lt;= html.BUTTON("啟動", id="power")
+# 清除畫布
+def clear_bd1(ev):
+    # 注意這裡清除的畫布 id 為 brython_div
+    bd = doc["brython_div"]
+    bd.clear()
+Ace1 = ace.Editor(editor_id="kw_editor1", console_id="kw_console1", container_id="kw__container1", storage_id="kw_py_src1" )
+# 從 gist 取出程式碼後, 放入 editor 作為 default 程式
+def run1():
+    # 利用 get 取下 src 變數值
+    try:
+        url = doc.query["src"]
+    except:
+        url = "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/c3a6deaf717f8f2739a4b1392a5ab10936e9693a/from_1_add_to_10_1.py"
+    prog = open(url).read()
 
-px = 0
-py =50
-width = 20
-height = 20
-speed = 2
+    # 將程式載入編輯區
+    Ace1.editor.setValue(prog)
+    Ace1.editor.scrollToRow(0)
+    Ace1.editor.gotoLine(0)
+    # 直接執行程式
+    #ns = {'__name__':'__main__'}
+    #exec(prog, ns)
+    # 按下 run 按鈕
+    Ace1.run()
 
-def game():
-    global px, py, width, height, speed
-    ctx.clearRect(px, py, width, height)
-    ctx.fillStyle = "red"
-    px+=speed
-    if px &lt;(px+210)&gt;canvas.width:
-        px=200
-    
-    if px&lt;(px+210)&gt;canvas.width:   
-        py += speed
-    
-    if py &lt; 0 or (py+height ) &gt; canvas.height:
-        speed = -speed
-        
-    ctx.fillRect(px, py, width, height)
-    
-    cube()
+# 執行程式, 顯示輸出結果與清除輸出結果及對應按鈕綁定
+doc['kw_run1'].bind('click', Ace1.run)
+doc['kw_show_console1'].bind('click', Ace1.show_console)
+doc['kw_clear_console1'].bind('click', Ace1.clear_console)
+doc['clear_bd1'].bind('click', clear_bd1)
+# 呼叫函式執行
+run1()
+</script>
+<!-- 以上為內建程式, 頁面可透過 ?src=gist_url 執行 -->
+<p><!-- add 1 to 100 開始 -->
+<script type="text/python3">
+from browser import document as doc
+import ace
 
-game = None
+# 清除畫布
+def clear_bd1(ev):
+    bd = doc["brython_div1"]
+    bd.clear()
 
-def gametion(ev) :
-    global game
-    if game is None :
-        game = timer.set_interval(cube, 10)
-        doc['power'].text = '暫停'
-    elif game == 'hold':
-        game = timer.set_interval(cube, 10)
-        doc['power'].text = '暫停'
-    else:
-        timer.clear_interval(game)
-        game = 'hold'
-        doc['power'].text = '繼續'
-doc["power"].bind("click", gametion)
-browser.timer.set_interval(game, 10)</pre>
-<pre><br/><br/><br/><a href="https://gist.githubusercontent.com/RWE1116/b23c9cea9c964dc32c94954e5681bc8f/raw/a7c27f3b821e0a06fc546b3618e470cf91169704/%25E8%258B%25B1%25E6%2589%2593">英打</a></pre>
-<pre>Every gist is a Git repository,which means that it can be forked and cioned.If you are singned in to GitHub when you create a gist,the gist will be associated with your account and you will see it your list of gists when you navigate to your gist home page.
-Gist can be public or secret.Public gists show up in Discover,where people can browse new gists as they're creted.They're aiso seaarchabie,so you can use them if you'd like other people to find and see your work.
-Secret gists don't show up in Discover and are not searchable.Secret gists aren't private private.If yousend the URL of a secret gist to a friend, thy'll be able to ee it.However,if someone youdon't know discovers the URL,they'llaiso be able to see your gist.If you need to keep your code away from pryind eyes,youmay want to crate a private repository instead.
-After creating a gist,you cannot convert it from public to secret.
-You'll receive a notification when:
-You are the author of a gist.
-Someone mentions you in a gist.
-You subscribe to a gist,by clicking Subscribe at top of gist.
-You can pin gists to your profile so other people can see them easily. For more information,see Pinning items to your profile."
-You can discover public gists others have created by going to the gist home page and clicking All Gists.This will take you to a page of all gists sorted and displayed by time of creation or update.Youacn also search gists by language with Gist Search.Gist search uses the same search syntax as code search.
-Since gists are Git  repositories, you can view their full commit history,complete with diffs.Youcan also fork or clone gists.For more information,see"Forkng and cioning gists".
-You can downioad a ZIP file of a gist by clicking he Download ZIP button at the top of the gist.You can embed a gist in any text fild thetsupports Javascript,such as a biog post.Toget the embed code, click the clipboard icon next to the Embed URL of a gist. To embed a specific gist file,append the Embed URL with ?file=FILENAME.
-Gist supports mapping GeoJSON files.These maps are displayed in embedded gists,so you can easily share and embed maps.For more information,see"Working with non-code files."
-計時44:45.85<br/><br/><a href="https://gist.githubusercontent.com/RWE1116/2f75b477d4ec44f847e825499a1c2ae8/raw/c214fe3f9e11ecc97266630738ef7ecd2b1dfa15/%25E4%25B8%25AD%25E6%2589%2593">中打<br/><br/></a></pre>
-<pre>Gist是Github的一個子服務，且任人都可以使用這個服務，不論你是否擁
-有Github帳號。以開發者的角度來說，最基本的功能就是可以分享片段的原
-始碼。有別於Github的Repository，Gist可以只分享專案中的某一個小檔案
-中的程式碼，且有私人的選項，讓別人不會搜尋到你的Gist。在Github的
-Repository設定Private是要付費的，但在Gist是不需要的。除此之外Gist
-還有許多用處，包括科以直接執行我們就來一一介紹吧！
-時間10:13.39<br/><br/></pre>
-<br />About << <a href='About.html'>Previous</a> <a href='run1.html'>Next</a> >> run1</div>
+# 利用 ace 中的 Editor 建立 Ace 物件, 其中的輸入變數分別對應到頁面中的編輯區物件
+Ace2 = ace.Editor(editor_id="kw_editor1", console_id="kw_console1", container_id="kw__container1", storage_id="kw_py_src1" )
+
+class button2:
+    def __init__(self, url):
+        self.url = url
+
+    # 記得加入 event 輸入變數
+    def do(self,ev):
+        Ace2.editor.setValue(open(self.url).read())
+        Ace2.editor.scrollToRow(0)
+        Ace2.editor.gotoLine(0)
+        Ace2.run()
+
+add1to100_url = "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py"
+add1to100 = button2(add1to100_url)
+doc["add1to100"].bind('click', add1to100.do)
+################################# p261 start 
+p261_url = "https://gist.githubusercontent.com/mdecourse/2f56974a40da7a218dbaef376a5b4ca4/raw/980606effcd29635307d6474718cd4a7ef016747/p261.py"
+p261 = button2(p261_url)
+doc["p261"].bind('click', p261.do)
+################################## p261 end
+################################## rocflag start
+rocflag_url = "https://gist.githubusercontent.com/mdecourse/2f56974a40da7a218dbaef376a5b4ca4/raw/0e2ca81d5c2539c4b6c86071c8cf9de0b1251b9c/roc_flag.py"
+rocflag = button2(rocflag_url)
+doc["rocflag"].bind("click", rocflag.do)
+################################## rocflag end
+
+red_url="https://gist.githubusercontent.com/RWE1116/0cec6496a5a27122e1ae936eadb82092/raw/db4faacd500d6c2e759de34cf97d3973bf757493/HW1.py"
+red = button2(red_url)
+doc["red"].bind("click", red.do)
+################################## rocflag end
+################################## rocflag start
+</script>
+</p><br />HW1 << <a href='HW1.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2</div>
         
     <!-- footer -->
       <div class="container">
