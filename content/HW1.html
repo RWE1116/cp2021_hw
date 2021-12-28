@@ -140,53 +140,16 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">About << <a href='About.html'>Previous</a> <a href='run red.html'>Next</a> >> run red<br /><h1>HW1</h1>
-<p><a href="https://gist.githubusercontent.com/RWE1116/0cec6496a5a27122e1ae936eadb82092/raw/519d2ec3e7abe7239f5057455cc6f47492204ad0/HW1.py">紅方塊移動(無按鈕)</a></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
-from browser import document as doc
-import browser.timer
-
-canvas = html.CANVAS(width = 400, height = 100)
-canvas.id = "game-board3"
-brython_div = doc["brython_div3"]
-brython_div &lt;= canvas
-ctx = canvas.getContext("2d")
-px = 0
-py =50
-width = 20
-height = 20
-speed = 2
-
-def game():
-    global px, py, width, height, speed
-    ctx.clearRect(px, py, width, height)
-    ctx.fillStyle = "red"
-    px+=speed
-    if px &lt;(px+210)&gt;canvas.width:
-        px=200
-    
-    if px&lt;(px+210)&gt;canvas.width:   
-        py += speed
-    
-    if py &lt; 0 or (py+height ) &gt; canvas.height:
-        speed = -speed
-        
-    ctx.fillRect(px, py, width, height)
-    
-browser.timer.set_interval(game, 10)
-</pre>
-<p></p>
-<p><a href="https://gist.githubusercontent.com/RWE1116/75ce59aec0e534d9cb69a6026c84b8e5/raw/1560f3db2efd89ac1a909c064ffaf3d4f1f6f253/gistfile1.txt">紅方塊移動(有按鈕)</a></p>
+<p><a href="https://gist.githubusercontent.com/RWE1116/0cec6496a5a27122e1ae936eadb82092/raw/db4faacd500d6c2e759de34cf97d3973bf757493/HW1.py">紅方塊移動(無按鈕)</a></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from browser import html
 from browser import document as doc
 import browser.timer
 
 canvas = html.CANVAS(width = 400, height = 100)
-canvas.id = "game-board3"
-brython_div = doc["brython_div3"]
+canvas.id = "game-board"
+brython_div = doc["brython_div"]
 brython_div &lt;= canvas
 ctx = canvas.getContext("2d")
-brython_div &lt;= html.BUTTON("啟動", id="power")
-
 px = 0
 py =50
 width = 20
@@ -209,10 +172,41 @@ def game():
         
     ctx.fillRect(px, py, width, height)
     
-    cube()
+browser.timer.set_interval(game, 10)</pre>
+<p><br/><br/></p>
+<p><a href="https://gist.githubusercontent.com/RWE1116/75ce59aec0e534d9cb69a6026c84b8e5/raw/209dac8c6ff03ba434d5adb762a499b38a6eb8b1/red%2520point1.py">紅方塊移動(有按鈕)</a></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+from browser import timer
+import browser.timer
+
+canvas = html.CANVAS(width = 300, height = 300)
+canvas.id = "game-board"
+brython_div = doc["brython_div"]
+brython_div &lt;= canvas
+ctx = canvas.getContext("2d")
+brython_div &lt;= html.BUTTON("啟動", id="power")
+px = 0
+py =150
+width = 20
+height = 20
+speed = 2
+def cube():
+    global px, py, width, height, speed
+    ctx.clearRect(px, py, width, height)
+    ctx.fillStyle = "red"
+    if px &lt; (canvas.width/2):
+        px += speed
+    else:
+        py += speed
+    
+        if py &lt; 0 or (py + height) &gt; canvas.height:
+            speed = -speed
+    ctx.fillRect(px, py, width, height)
+    
+cube()
 
 game = None
-
 def gametion(ev) :
     global game
     if game is None :
@@ -226,7 +220,7 @@ def gametion(ev) :
         game = 'hold'
         doc['power'].text = '繼續'
 doc["power"].bind("click", gametion)
-browser.timer.set_interval(game, 10)</pre>
+browser.timer.set_interval(game, 1)</pre>
 <pre><br/><br/><br/><a href="https://gist.githubusercontent.com/RWE1116/b23c9cea9c964dc32c94954e5681bc8f/raw/a7c27f3b821e0a06fc546b3618e470cf91169704/%25E8%258B%25B1%25E6%2589%2593">英打</a></pre>
 <pre>Every gist is a Git repository,which means that it can be forked and cioned.If you are singned in to GitHub when you create a gist,the gist will be associated with your account and you will see it your list of gists when you navigate to your gist home page.
 Gist can be public or secret.Public gists show up in Discover,where people can browse new gists as they're creted.They're aiso seaarchabie,so you can use them if you'd like other people to find and see your work.
@@ -248,8 +242,7 @@ Gist supports mapping GeoJSON files.These maps are displayed in embedded gists,s
 中的程式碼，且有私人的選項，讓別人不會搜尋到你的Gist。在Github的
 Repository設定Private是要付費的，但在Gist是不需要的。除此之外Gist
 還有許多用處，包括科以直接執行我們就來一一介紹吧！
-時間10:13.39<br/><br/></pre>
-<br />About << <a href='About.html'>Previous</a> <a href='run red.html'>Next</a> >> run red</div>
+時間10:13.39<br/><br/></pre><br />About << <a href='About.html'>Previous</a> <a href='run red.html'>Next</a> >> run red</div>
         
     <!-- footer -->
       <div class="container">
